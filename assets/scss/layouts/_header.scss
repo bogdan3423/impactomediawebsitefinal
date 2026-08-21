@@ -1,0 +1,87 @@
+.header {
+    padding: 28px 0;
+    z-index: 99;
+    transition: all 0.5s ease-in-out;
+    animation: 0.5s ease-in-out 0s normal none 1 running fadeInDown;
+
+    @include media-breakpoint-down(lg) {
+        padding: 20px 0;
+    }
+
+    &.fixed-header {
+        padding: 20px 0;
+        background-color: var(--bs-primary);
+
+        .logo {
+            .logo-dark {
+                display: block;
+            }
+
+            .logo-white {
+                display: none;
+            }
+        }
+
+        .light-dark {
+            color: var(--bs-dark) !important;
+        }
+
+        .toggle-menu {
+            background-color: var(--bs-dark) !important;
+
+            .menu-icon {
+                color: var(--bs-white) !important;
+            }
+        }
+    }
+
+    .logo {
+        a {
+            display: block;
+            position: relative;
+            width: 194px;
+            height: 54px;
+            overflow: hidden;
+        }
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 388px;
+            max-width: none;
+            height: auto;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo-dark {
+            display: none;
+        }
+    }
+
+    .header-menu {
+
+        .header-item {
+            .header-link {
+                .animate-spin {
+                    transition: 0.5s;
+                }
+
+                .animate-spin {
+                    opacity: 0;
+                    width: 0;
+                }
+
+                &:hover,
+                &.active {
+                    .animate-spin {
+                        opacity: 1;
+                        width: 20px;
+                        margin-inline-end: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+}

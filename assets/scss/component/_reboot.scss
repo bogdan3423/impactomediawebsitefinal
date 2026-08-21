@@ -1,0 +1,37 @@
+// ----------------------------------------------
+// Reboot Style
+// ----------------------------------------------
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--bs-dark-light);
+}
+
+.page-wrapper {
+    overflow-x: clip;
+}
+
+.link-hover {
+    &:hover {
+        color: var(--bs-primary) !important;
+    }
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+:focus {
+    outline: 0;
+    box-shadow: none !important;
+}
