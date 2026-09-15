@@ -1,0 +1,7 @@
+/index.html https://impactomedia.ro/ 301!
+/html/index.html https://impactomedia.ro/ 301!
+/html/ https://impactomedia.ro/ 301!
+/html/404.html https://impactomedia.ro/404.html 301!
+http://impactomedia.ro/* https://impactomedia.ro/:splat 301!
+http://www.impactomedia.ro/* https://impactomedia.ro/:splat 301!
+https://www.impactomedia.ro/* https://impactomedia.ro/:splat 301!

@@ -1,0 +1,9 @@
+{
+  "name": "impactomedia-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "NODE_ENV=production node scripts/build-seo.mjs",
+    "seo:audit": "node scripts/seo-audit.mjs"
+  }
+}

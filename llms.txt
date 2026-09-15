@@ -1,0 +1,19 @@
+# ImpactoMedia
+
+> Agenție de marketing din Cluj-Napoca specializată în producție video, publicitate PPC și dezvoltare web.
+
+## Pagini principale
+
+- [Acasă](https://impactomedia.ro/): Prezentarea agenției, a serviciilor și a echipei.
+- [Servicii](https://impactomedia.ro/html/services.html): Marketing video, Google Ads, Meta Ads, TikTok Ads, website-uri și magazine online.
+- [Despre noi](https://impactomedia.ro/html/about-us.html): Informații despre abordare și echipă.
+- [Contact](https://impactomedia.ro/html/contact.html): Datele de contact ImpactoMedia.
+
+## Informații oficiale
+
+- Website: https://impactomedia.ro/
+- E-mail: contact@impactomedia.ro
+- Telefon: +40 748 030 566
+- Locație: Cluj-Napoca, România
+
+Acest fișier este auxiliar. Pentru URL-urile indexabile, consultați sitemap.xml.
