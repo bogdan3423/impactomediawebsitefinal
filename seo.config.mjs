@@ -68,6 +68,13 @@ export default {
         ["Dezvoltare web", "Website-uri de prezentare și magazine online responsive, construite pentru un parcurs clar spre conversie."]
       ]
     },
+    "html/studii-de-caz.html": {
+      path: "/html/studii-de-caz.html",
+      title: "Studiu de caz LuxuraInvest | Video și website imobiliar",
+      description: "Vezi cum ImpactoMedia a construit pentru LuxuraInvest un sistem complet de promovare: producție video profesională, cadre din dronă, editare, publicare și website.",
+      type: "article",
+      breadcrumb: "Studii de caz"
+    },
     "html/about-us.html": {
       path: "/html/about-us.html",
       title: "Despre ImpactoMedia | Agenție de marketing din Cluj-Napoca",
