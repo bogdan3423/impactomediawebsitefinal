@@ -964,9 +964,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Aos
 	if (window.AOS) {
-		AOS.init({
-			once: true,
-		});
+		try {
+			AOS.init({
+				once: true,
+			});
+			document.documentElement.classList.add("aos-active");
+
+			// Independent visibility fallback: content must never remain hidden if
+			// the animation library misses a scroll/intersection update.
+			const aosElements = document.querySelectorAll("[data-aos]");
+			if ("IntersectionObserver" in window) {
+				const aosVisibilityObserver = new IntersectionObserver(function (entries, observer) {
+					entries.forEach(function (entry) {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("aos-animate");
+							observer.unobserve(entry.target);
+						}
+					});
+				}, { rootMargin: "0px 0px -5% 0px" });
+
+				aosElements.forEach(function (element) {
+					aosVisibilityObserver.observe(element);
+				});
+			} else {
+				aosElements.forEach(function (element) {
+					element.classList.add("aos-animate");
+				});
+			}
+		} catch (error) {
+			document.documentElement.classList.remove("aos-active");
+		}
 	}
 
 });
