@@ -4,7 +4,22 @@
   X-Frame-Options: SAMEORIGIN
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-/assets/*
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/images/*
+  Cache-Control: public, max-age=2592000
+
+/assets/videos/*
+  Cache-Control: public, max-age=2592000
+
+/assets/css/*
+  Cache-Control: public, max-age=604800
+
+/assets/js/*
+  Cache-Control: public, max-age=604800
+
+/assets/libs/*
   Cache-Control: public, max-age=604800
 
 /sitemap.xml

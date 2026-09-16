@@ -1,4 +1,4 @@
-$(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     // Local Romanian / English language switch
     const englishTranslations = {
@@ -632,14 +632,153 @@ $(function () {
         translatePageToEnglish();
     }
 
-    // Header Scroll
-    $(window).scroll(function () {
-        if ($(window).scrollTop() >= 60) {
-            $("header").addClass("fixed-header");
-        } else {
-            $("header").removeClass("fixed-header");
+    // Lightweight menu dropdowns (replaces the full Bootstrap JavaScript bundle).
+    const dropdownToggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+
+    function closeDropdown(toggle) {
+        const group = toggle.closest('.btn-group');
+        const menu = group && group.querySelector('.dropdown-menu');
+
+        if (menu) {
+            menu.classList.remove('show');
+        }
+        if (group) {
+            group.classList.remove('show');
+        }
+        toggle.classList.remove('show');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function closeAllDropdowns(exceptToggle) {
+        dropdownToggles.forEach(function (toggle) {
+            if (toggle !== exceptToggle) {
+                closeDropdown(toggle);
+            }
+        });
+    }
+
+    dropdownToggles.forEach(function (toggle) {
+        const group = toggle.closest('.btn-group');
+        const menu = group && group.querySelector('.dropdown-menu');
+
+        if (!menu) {
+            return;
+        }
+
+        toggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const shouldOpen = !menu.classList.contains('show');
+            closeAllDropdowns(toggle);
+            menu.classList.toggle('show', shouldOpen);
+            group.classList.toggle('show', shouldOpen);
+            toggle.classList.toggle('show', shouldOpen);
+            toggle.setAttribute('aria-expanded', String(shouldOpen));
+        });
+
+        const closeButton = menu.querySelector('.btn-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', function () {
+                closeDropdown(toggle);
+                toggle.focus();
+            });
         }
     });
+
+    document.addEventListener('click', function () {
+        closeAllDropdowns();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeAllDropdowns();
+        }
+    });
+
+    // Lightweight accordions with the same Bootstrap class states and height transition.
+    function getCollapseToggle(panel) {
+        return document.querySelector('[data-bs-toggle="collapse"][data-bs-target="#' + panel.id + '"]');
+    }
+
+    function finishCollapseTransition(panel, show) {
+        panel.classList.remove('collapsing');
+        panel.classList.add('collapse');
+        panel.classList.toggle('show', show);
+        panel.style.height = '';
+
+        const toggle = getCollapseToggle(panel);
+        if (toggle) {
+            toggle.classList.toggle('collapsed', !show);
+            toggle.setAttribute('aria-expanded', String(show));
+        }
+    }
+
+    function setCollapseState(panel, show) {
+        if (!panel || panel.classList.contains('collapsing') || panel.classList.contains('show') === show) {
+            return;
+        }
+
+        const startHeight = panel.getBoundingClientRect().height;
+        panel.classList.remove('collapse', 'show');
+        panel.classList.add('collapsing');
+        panel.style.height = show ? '0px' : startHeight + 'px';
+        panel.offsetHeight;
+
+        const onTransitionEnd = function (event) {
+            if (event.target === panel && event.propertyName === 'height') {
+                finishCollapseTransition(panel, show);
+            }
+        };
+        panel.addEventListener('transitionend', onTransitionEnd, { once: true });
+
+        window.requestAnimationFrame(function () {
+            panel.style.height = show ? panel.scrollHeight + 'px' : '0px';
+        });
+
+        window.setTimeout(function () {
+            if (panel.classList.contains('collapsing')) {
+                finishCollapseTransition(panel, show);
+            }
+        }, 450);
+    }
+
+    document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (toggle) {
+        toggle.addEventListener('click', function () {
+            const targetSelector = toggle.getAttribute('data-bs-target');
+            const panel = targetSelector && document.querySelector(targetSelector);
+
+            if (!panel) {
+                return;
+            }
+
+            const shouldOpen = !panel.classList.contains('show');
+            const parentSelector = panel.getAttribute('data-bs-parent');
+
+            if (shouldOpen && parentSelector) {
+                const parent = document.querySelector(parentSelector);
+                if (parent) {
+                    parent.querySelectorAll('.accordion-collapse.show').forEach(function (openPanel) {
+                        if (openPanel !== panel) {
+                            setCollapseState(openPanel, false);
+                        }
+                    });
+                }
+            }
+
+            setCollapseState(panel, shouldOpen);
+        });
+    });
+
+    // Header Scroll
+    const siteHeader = document.querySelector("header");
+
+    function updateHeaderState() {
+        if (siteHeader) {
+            siteHeader.classList.toggle("fixed-header", window.scrollY >= 60);
+        }
+    }
+
+    updateHeaderState();
+    window.addEventListener("scroll", updateHeaderState, { passive: true });
 
 
     // Count numbers when they enter the viewport
@@ -692,7 +831,7 @@ $(function () {
         });
 
         countElements.forEach(function (element) {
-            if ($.isNumeric(element.textContent.trim())) {
+            if (Number.isFinite(Number(element.textContent.trim()))) {
                 countObserver.observe(element);
             }
         });
@@ -708,16 +847,51 @@ $(function () {
     }
 
     const btn = document.getElementById("scrollToTopBtn");
-    btn.addEventListener("click", scrollToTop);
+    if (btn) {
+        btn.addEventListener("click", scrollToTop);
 
-    window.onscroll = function () {
-        const btn = document.getElementById("scrollToTopBtn");
-        if (document.documentElement.scrollTop > 100 || document.body.scrollTop > 100) {
-            btn.style.display = "flex";
-        } else {
-            btn.style.display = "none";
+        function updateScrollButton() {
+            btn.style.display = document.documentElement.scrollTop > 100 || document.body.scrollTop > 100
+                ? "flex"
+                : "none";
         }
-    };
+
+        updateScrollButton();
+        window.addEventListener("scroll", updateScrollButton, { passive: true });
+    }
+
+    // Load below-the-fold videos only when they approach the viewport.
+    const lazyVideos = document.querySelectorAll("video[data-lazy-video]");
+
+    function loadLazyVideo(video) {
+        video.querySelectorAll("source[data-src]").forEach(function (source) {
+            source.src = source.dataset.src;
+            source.removeAttribute("data-src");
+        });
+        video.load();
+        if (video.hasAttribute("autoplay")) {
+            video.play().catch(function () {
+                // Autoplay may be restricted by browser settings; the poster remains visible.
+            });
+        }
+    }
+
+    if (!("IntersectionObserver" in window)) {
+        lazyVideos.forEach(loadLazyVideo);
+    } else {
+        const videoObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    loadLazyVideo(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: "300px 0px" });
+
+        lazyVideos.forEach(function (video) {
+            videoObserver.observe(video);
+        });
+    }
 
 
     // Staggered service titles
@@ -789,9 +963,11 @@ $(function () {
 
 
     // Aos
-	AOS.init({
-		once: true,
-	});
+	if (window.AOS) {
+		AOS.init({
+			once: true,
+		});
+	}
 
 });
 

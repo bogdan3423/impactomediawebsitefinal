@@ -135,10 +135,9 @@
   <link rel="icon" type="image/svg+xml" href="../assets/images/logos/favicon.svg">
   <link rel="apple-touch-icon" href="../assets/images/logos/logoimpactomedia.png">
   <link rel="manifest" href="../site.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="../assets/libs/aos-master/dist/aos.css">
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="preload" as="image" href="../assets/images/backgrounds/projects-banner.webp" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="../assets/libs/aos-master/dist/aos-lean.css">
+  <link rel="stylesheet" href="../assets/css/services.min.css">
 </head>
 
 <body>
@@ -149,10 +148,10 @@
       <div class="header-wrapper d-flex align-items-center justify-content-between">
         <div class="logo">
           <a href="../" class="logo-white">
-            <img src="../assets/images/logos/logoimpactomedia.png" alt="ImpactoMedia" width="1536" height="1024" decoding="async" class="img-fluid">
+            <img src="../assets/images/logos/logoimpactomedia.webp" alt="ImpactoMedia" width="776" height="517" decoding="async" fetchpriority="high" class="img-fluid">
           </a>
           <a href="../" class="logo-dark">
-            <img src="../assets/images/logos/logoimpactomedia.png" alt="ImpactoMedia" width="1536" height="1024" decoding="async" class="img-fluid">
+            <img src="../assets/images/logos/logoimpactomedia.webp" alt="ImpactoMedia" width="776" height="517" decoding="async" fetchpriority="high" class="img-fluid">
           </a>
         </div>
         <div class="d-flex align-items-center gap-4">
@@ -215,7 +214,7 @@
 
     <!-- Services Hero -->
     <section class="banner-section banner-inner-section position-relative overflow-hidden d-flex align-items-end"
-      style="background-image: url(../assets/images/backgrounds/projects-banner.jpg);">
+      style="background-image: url(../assets/images/backgrounds/projects-banner.webp);">
       <div class="container">
         <div class="d-flex flex-column gap-4 pb-5 pb-xl-10 position-relative z-1">
           <div class="row align-items-center">
@@ -274,7 +273,7 @@
           <div class="col-lg-5">
             <div class="service-detail-media service-detail-media-portrait" data-aos="fade-right" data-aos-delay="100"
               data-aos-duration="1000">
-              <img src="../assets/images/services/marketingvideo.jpeg" width="946" height="2048" loading="lazy" decoding="async"
+              <img src="../assets/images/services/marketingvideo.webp" width="700" height="1515" loading="lazy" decoding="async"
                 alt="Filmarea unui material de marketing video cu echipament profesional">
             </div>
           </div>
@@ -587,10 +586,8 @@
     </button>
   </div>
 
-  <script defer src="../assets/libs/jquery/dist/jquery.min.js"></script>
-  <script defer src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script defer src="../assets/libs/aos-master/dist/aos.js"></script>
-  <script defer src="../assets/js/custom.js"></script>
+  <script defer src="../assets/libs/aos-master/dist/aos.min.js"></script>
+  <script defer src="../assets/js/custom-core.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 

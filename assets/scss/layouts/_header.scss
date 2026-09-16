@@ -84,4 +84,10 @@
         }
     }
 
+    .dropdown-menu-end {
+        top: calc(100% + var(--bs-dropdown-spacer));
+        right: 0;
+        left: auto;
+    }
+
 }
